@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Hati Lucu Muncul Acak</title>
+
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #fff0f5;
+            height: 100vh;
+            position: relative;
+        }
+
+        .heart {
+            width: 30px;
+            height: 30px;
+            position: absolute;
+            background-color: pink;
+            transform: rotate(45deg);
+            opacity: 0;
+            animation: pop 0.3s ease forwards, wiggle 0.5s ease-in-out infinite alternate, fadeOut 2.5s ease 1s forwards;
+            z-index: 10;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: "";
+            width: 30px;
+            height: 30px;
+            position: absolute;
+            background-color: pink;
+            border-radius: 50%;
+        }
+
+        .heart::before {
+            top: -15px;
+            left: 0;
+        }
+
+        .heart::after {
+            left: -15px;
+            top: 0;
+        }
+
+        /* Efek pop muncul */
+        @keyframes pop {
+            to {
+                opacity: 1;
+                transform: scale(1.2) rotate(45deg);
+            }
+        }
+
+        /* Efek wiggle (goyang lucu) */
+        @keyframes wiggle {
+            0% {
+                transform: rotate(45deg) translateX(-2px);
+            }
+
+            100% {
+                transform: rotate(45deg) translateX(2px);
+            }
+        }
+
+        /* Menghilang perlahan */
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+            }
+        }
+
+        .button-container {
+            background: none;
+            font-family: 'poppins', sans-serif;
+            font-weight: bold;
+            border: 2px solid rgb(248, 148, 165);
+            margin: 35% 30% 30% 47%;
+            position: absolute;
+            padding: 10px;
+            border-radius: 50px;
+            background-color: rgb(248, 148, 165);
+            cursor: pointer;
+            animation: jedagjedug 2s infinite;
+        }
+
+
+        .button-container:hover {
+            background-color: transparent;
+            transition: 0.4s ease-in-out;
+        }
+
+        .main-img {
+            margin-left: 35%;
+            margin-top: 15%;
+        }
+
+        .chat {
+            background-color: rgb(248, 148, 165);
+            width: 15%;
+            height: 15%;
+            border-radius: 50%;
+            margin: -25% 50% 0% 55%;
+        }
+
+        .chat-bubble {
+            position: relative;
+            left: 65%;
+            margin-top: -10.9%;
+
+            color: white;
+            
+            border-radius: 15px;
+
+            text-align: left;
+            font-size: 14px;
+
+        }
+
+        .chat-bubble::before {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 100px solid transparent;
+            border-right: 50px solid transparent;
+            border-bottom: 100px solid rgb(248, 148, 165);
+            /* Warna segitiga */
+            margin-top: -10%;
+            /* Posisi segitiga */
+            left: -10.5%;
+            /* Atur posisi horizontal */
+            transform: rotate(-140deg);
+        }
+
+        @keyframes jedagjedug {
+
+            0%,
+            50% {
+                transform: scale(1);
+            }
+
+            50%,
+            70% {
+                transform: scale(1.2);
+            }
+
+            70%,
+            100% {
+                transform: scale(1);
+            }
+        }
+        .main-teks{
+            font-family: 'popins',sans-serif;
+            font-weight: bold;
+            color:white;
+            position: relative;
+            left:56.5%;
+            top:-11.5%;
+            font-size: 30px;
+        }
+        .main-img-2{
+         margin-left:40%;
+         margin-top:15%;
+         width:20%;
+        }
+        .main-teks-2{
+            font-family: 'popins',sans-serif;
+            font-weight: bold;
+            color:white;
+            position: relative;
+            left:46%;
+            top:40%;
+            font-size: 30px;
+            border:1px solid rgb(248, 148, 165);
+            background-color:rgb(248, 148, 165);
+            text-align: center;
+            position:absolute;
+            padding:10px;
+            border-radius: 40px;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <p class="button-container">Press Me</p>
+
+    </div>
+    <div class="main">
+        <img class="main-img" src="stiker-removebg-preview.png">
+        <img class="main-img-2" src="stiker-panda-lucu-3.png" style="display:none;">
+    </div>
+    <div class="chat-bubble"></div>
+    <div class="chat">
+        
+    </div>
+    <p class=main-teks>Nih buat kamu..</p>
+    <p style="display:none" class="main-teks-2">Hehehe</p>
+
+
+
+
+
+
+
+
+
+    <script>
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+
+            // Posisi acak (pastikan tidak keluar layar)
+            const x = Math.random() * (window.innerWidth - 40);
+            const y = Math.random() * (window.innerHeight - 40);
+            heart.style.left = `${x}px`;
+            heart.style.top = `${y}px`;
+
+            // Ukuran acak sedikit
+            const size = Math.random() * 10 + 20;
+            heart.style.width = `${size}px`;
+            heart.style.height = `${size}px`;
+            heart.style.setProperty('--size', `${size}px`);
+
+            // Warna acak cerah
+            const colors = ['#ff4d6d', '#ff66a3', '#ff85c1', '#ffa3c7', '#ff5c8a'];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            heart.style.backgroundColor = color;
+            heart.style.setProperty('--heart-color', color);
+
+            // Before & After ikutin warna
+            heart.style.setProperty('--before-color', color);
+
+            document.body.appendChild(heart);
+
+            // Hapus setelah 4 detik
+            setTimeout(() => {
+                heart.remove();
+            }, 4000);
+        }
+
+        // Muncul terus-menerus tiap 300ms
+        setInterval(createHeart, 80);
+
+        // Event listener for "Press Me" button to hide sticker and chat bubble and show second sticker
+        document.querySelector('.button-container').addEventListener('click', () => {
+            const sticker = document.querySelector('.main-img');
+            const sticker2 = document.querySelector('.main-img-2');
+            const chatBubble = document.querySelector('.chat-bubble');
+            const chat = document.querySelector('.chat');
+            const container = document.querySelector('.button-container');
+            const teks=document.querySelector('.main-teks');
+            const teks2=document.querySelector('.main-teks-2');
+
+            if (sticker) sticker.style.display = 'none';
+            if (chatBubble) chatBubble.style.display = 'none';
+            if (chat) chat.style.display = 'none';
+            if (container) container.style.display = 'none';
+            if (teks) teks.style.display = 'none';
+            if (teks2) teks2.style.display = 'block';
+            if (sticker2) sticker2.style.display = 'block';
+        });
+
+    </script>
+
+
+</body>
+
+</html>
